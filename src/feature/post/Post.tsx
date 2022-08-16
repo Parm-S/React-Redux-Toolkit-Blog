@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import PostAuthor from './PostAuthor'
 import TimeAgo from './TimeAgo'
 import ReactionButtons from './ReactionButtons'
-import { InitialStateProps } from './postSlice'
+import { IPost } from './postSlice'
 
 interface IPostProps {
   postId: string | number
@@ -14,10 +14,10 @@ interface IPostProps {
   content: string
   userId: string | number
   date: string
-  post : InitialStateProps
+  post: IPost
 }
 
-const Post: React.FC<IPostProps> = ({ postId, title, content, userId, date ,post }) => {
+const Post: React.FC<IPostProps> = ({ postId, title, content, userId, date, post }) => {
   return (
     <Card sx={{ width: 1 }}>
       <CardContent

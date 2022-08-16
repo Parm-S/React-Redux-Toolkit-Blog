@@ -14,7 +14,7 @@ import Input from '../../../common/input'
 import Select from '../../../common/select'
 
 import { selectAllUsers } from '../../users/userSlice'
-import { postAdded } from '../postSlice'
+import { addNewPost, postAdded } from '../postSlice'
 
 interface Fields {
   title: string
@@ -27,6 +27,8 @@ const AddPostForm: React.FC = () => {
     mode: 'onSubmit',
     reValidateMode: 'onChange',
   })
+
+  const [addRequestStatus, setAddRequestStatus] = React.useState('idle')
 
   const users = useAppSelector(selectAllUsers)
 
@@ -41,8 +43,17 @@ const AddPostForm: React.FC = () => {
 
   const submitHandler = methods.handleSubmit((data: Fields) => {
     if (data) {
-      dispatch(postAdded(data.title, data.content, data.userId))
-      resetHandler()
+      try {
+        setAddRequestStatus('pending')
+        dispatch(
+          addNewPost({ title: data.title, body: data.content, userId: data.userId })
+        ).unwrap()
+        resetHandler()
+      } catch (err) {
+        console.error('Failed to save post', err)
+      } finally {
+        setAddRequestStatus('idle')
+      }
     }
   })
 
@@ -77,7 +88,15 @@ const AddPostForm: React.FC = () => {
               display: 'flex',
             }}
           >
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={
+                methods.formState.dirtyFields.title as boolean === false &&
+                methods.formState.dirtyFields.content === false &&
+                methods.formState.dirtyFields.userId === false
+              }
+            >
               Add Post
             </Button>
             <Button type="reset" onClick={resetHandler}>

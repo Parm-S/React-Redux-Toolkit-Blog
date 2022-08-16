@@ -9,6 +9,9 @@ import App from './App'
 import { store } from './app/store'
 
 import theme from './theme'
+import { fetchUsers } from './feature/users/userSlice'
+
+store.dispatch(fetchUsers());
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

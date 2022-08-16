@@ -2,7 +2,6 @@ import React, { Children } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
 
 import { textFieldStyles } from '../input/style'
 
@@ -14,7 +13,6 @@ interface ISelectProps {
 }
 
 const Select: React.FC<ISelectProps> = ({ name, label, defaultValue, children }) => {
-  console.log(label)
   const { control, getValues } = useFormContext()
   return (
     <Controller
