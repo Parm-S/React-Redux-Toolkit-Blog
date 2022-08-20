@@ -3,9 +3,14 @@ import React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
+import CardActionArea from '@mui/material/CardActionArea'
+
+import { Link } from 'react-router-dom'
+
 import PostAuthor from './PostAuthor'
 import TimeAgo from './TimeAgo'
 import ReactionButtons from './ReactionButtons'
+
 import { IPost } from './postSlice'
 
 interface IPostProps {
@@ -20,35 +25,37 @@ interface IPostProps {
 const Post: React.FC<IPostProps> = ({ postId, title, content, userId, date, post }) => {
   return (
     <Card sx={{ width: 1 }}>
-      <CardContent
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'wrap',
-          alignContent: 'center',
-          alignItems: 'flex-start',
-        }}
-      >
-        <Typography
-          variant="h5"
+      <CardActionArea component={Link} to={`post/${postId}`}>
+        <CardContent
           sx={{
-            wordBreak: 'break-all',
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+            alignContent: 'center',
+            alignItems: 'flex-start',
           }}
         >
-          {title}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            wordBreak: 'break-all',
-          }}
-        >
-          {content}
-        </Typography>
-        <PostAuthor userId={userId} />
-        <TimeAgo timeStamp={date} />
-        <ReactionButtons post={post} />
-      </CardContent>
+          <Typography
+            variant="h5"
+            sx={{
+              wordBreak: 'break-all',
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              wordBreak: 'break-all',
+            }}
+          >
+            {content}
+          </Typography>
+          <PostAuthor userId={userId} />
+          <TimeAgo timeStamp={date} />
+          <ReactionButtons post={post} />
+        </CardContent>
+      </CardActionArea>
     </Card>
   )
 }
