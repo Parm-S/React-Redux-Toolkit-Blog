@@ -3,21 +3,27 @@ import ReactDOM from 'react-dom/client'
 
 import { Provider } from 'react-redux'
 
+import { BrowserRouter } from 'react-router-dom'
+
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 
-import App from './App'
 import { store } from './app/store'
 
 import theme from './theme'
+
 import { fetchUsers } from './feature/users/userSlice'
 
-store.dispatch(fetchUsers());
+import App from './App'
+
+store.dispatch(fetchUsers())
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

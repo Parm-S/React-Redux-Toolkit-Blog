@@ -31,9 +31,9 @@ interface InitialStateProps {
 }
 
 interface IIntialPost {
-  title : string,
-  body:string,
-  userId:string | number
+  title: string
+  body: string
+  userId: string | number
 }
 
 const initialState: InitialStateProps = {
@@ -53,7 +53,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   }
 })
 
-export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost : IIntialPost) => {
+export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost: IIntialPost) => {
   try {
     const response = await axios.post(POST_URL, initialPost)
     return response.data
@@ -146,6 +146,9 @@ export const selectAllPosts = (state: RootState) => state.posts.posts
 export const getPostsStatus = (state: RootState) => state.posts.status
 
 export const getPostsError = (state: RootState) => state.posts.error
+
+export const selectPostById = (state: RootState, postId: string | number) =>
+  state.posts.posts.find((post) => post.id === postId)
 
 export const { postAdded, reactionAdded } = postSlice.actions
 

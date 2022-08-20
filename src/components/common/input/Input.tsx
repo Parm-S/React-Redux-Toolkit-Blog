@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 
 import { Controller, useFormContext } from "react-hook-form";
 
-import isValidPattern from "../../utils/patternValidation";
+import isValidPattern from "../../../utils/patternValidation";
 import { invalidTextFieldStyles, textFieldStyles } from "./style";
 
 

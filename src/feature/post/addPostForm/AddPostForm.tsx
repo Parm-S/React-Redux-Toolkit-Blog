@@ -10,8 +10,8 @@ import Typography from '@mui/material/Typography'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hook'
 
-import Input from '../../../common/input'
-import Select from '../../../common/select'
+import Input from '../../../components/common/input'
+import Select from '../../../components/common/select'
 
 import { selectAllUsers } from '../../users/userSlice'
 import { addNewPost, postAdded } from '../postSlice'
@@ -34,6 +34,8 @@ const AddPostForm: React.FC = () => {
 
   const dispatch = useAppDispatch()
 
+  const { title, content, userId } = methods.formState.dirtyFields
+
   const resetHandler = React.useCallback(() => {
     methods.reset({
       title: '',
@@ -42,7 +44,7 @@ const AddPostForm: React.FC = () => {
   }, [methods])
 
   const submitHandler = methods.handleSubmit((data: Fields) => {
-    if (data) {
+    if (data && addRequestStatus === 'idle') {
       try {
         setAddRequestStatus('pending')
         dispatch(
@@ -91,11 +93,7 @@ const AddPostForm: React.FC = () => {
             <Button
               type="submit"
               variant="contained"
-              disabled={
-                methods.formState.dirtyFields.title as boolean === false &&
-                methods.formState.dirtyFields.content === false &&
-                methods.formState.dirtyFields.userId === false
-              }
+              disabled={title === undefined || userId === undefined || content === undefined}
             >
               Add Post
             </Button>
