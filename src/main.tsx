@@ -14,6 +14,7 @@ import theme from './theme'
 import { fetchUsers } from './feature/users/userSlice'
 
 import App from './App'
+import CssBaseline from '@mui/material/CssBaseline'
 
 store.dispatch(fetchUsers())
 
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <App />
         </BrowserRouter>

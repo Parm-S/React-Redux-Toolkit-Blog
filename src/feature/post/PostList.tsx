@@ -59,10 +59,7 @@ const PostList: React.FC = () => {
   const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
 
   return (
-    <Container component="section">
-      <Typography component="h2" variant="h4" textAlign={'center'}>
-        Posts
-      </Typography>
+    <Container component="section" sx={{ mt : 10}}>
       {isLoading && (
         <Typography textAlign={'center'} variant="body1">
           Loading...
@@ -71,7 +68,7 @@ const PostList: React.FC = () => {
       {isPost && (
         <Grid
           container
-          spacing={4}
+          spacing={1}
           columns={{ xs: 1, md: 12 }}
           sx={{
             alignItems: 'stretch',
@@ -89,7 +86,7 @@ const PostList: React.FC = () => {
               }}
             >
               <Post
-                postId={post.id}
+                id={post.id}
                 title={post.title}
                 content={post.body}
                 userId={post.userId!}

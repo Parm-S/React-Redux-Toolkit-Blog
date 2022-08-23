@@ -60,7 +60,7 @@ const AddPostForm: React.FC = () => {
   })
 
   return (
-    <Container component={'section'}>
+    <Container component={'section'} sx={{ mt: 10 }}>
       <Typography component={'h2'} textAlign={'center'} variant="h4">
         Add a Posts Form
       </Typography>
