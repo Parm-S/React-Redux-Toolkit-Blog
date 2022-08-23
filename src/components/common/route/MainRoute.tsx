@@ -15,6 +15,7 @@ const MainRoute: React.FC = () => {
         <Route path="post">
           <Route index element={<AddPostForm />} />
           <Route path=":postId" element={<SinglePostPage />} />
+          <Route path="edit/:postId" element={<AddPostForm />} />
         </Route>
       </Route>
     </Routes>

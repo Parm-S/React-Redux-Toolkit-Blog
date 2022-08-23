@@ -5,10 +5,10 @@ import Button from '@mui/material/Button'
 
 import { useAppDispatch } from '../../app/hook'
 
-import { InitialStateProps, reactionAdded } from './postSlice'
+import { IPost, reactionAdded } from './postSlice'
 
 interface IReactionButton {
-  post: InitialStateProps
+  post: IPost
 }
 
 interface IreactionEmoji {
@@ -40,7 +40,10 @@ const ReactionButtons: React.FC<IReactionButton> = ({ post }) => {
         return (
           <Button
             key={reactionName}
-            onClick={() => onClickhandler(reactionName)}
+            onClick={(event) => {
+              event.preventDefault()
+              onClickhandler(reactionName)
+            }}
             sx={{ p: 0, justifyContent: 'flex-start' }}
           >
             {emoji} {post.reactions[reactionName]}

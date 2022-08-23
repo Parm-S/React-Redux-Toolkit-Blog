@@ -6,11 +6,10 @@ import Typography from '@mui/material/Typography'
 import { useAppSelector, useAppDispatch } from '../../app/hook'
 import Post from './Post'
 
-import { fetchPosts, getPostsError, getPostsStatus, IPost, selectAllPosts } from './postSlice'
+import { getPostsError, getPostsStatus, IPost, selectAllPosts } from './postSlice'
 import { Container } from '@mui/system'
 
 const PostList: React.FC = () => {
-  const dispatch = useAppDispatch()
   const posts = useAppSelector(selectAllPosts)
   const postStatus = useAppSelector(getPostsStatus)
   const error = useAppSelector(getPostsError)
@@ -22,17 +21,6 @@ const PostList: React.FC = () => {
   const [isError, setIsError] = React.useState<boolean>()
 
   const effect = React.useRef(false)
-
-  React.useEffect(() => {
-    if (effect.current === false) {
-      if (postStatus === 'idle') {
-        dispatch(fetchPosts())
-      }
-    }
-    return () => {
-      effect.current = true
-    }
-  }, [postStatus, dispatch])
 
   React.useEffect(() => {
     if (postStatus === 'loading') {
@@ -59,7 +47,7 @@ const PostList: React.FC = () => {
   const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
 
   return (
-    <Container component="section" sx={{ mt : 10}}>
+    <Container component="section" sx={{ mt: 10 }}>
       {isLoading && (
         <Typography textAlign={'center'} variant="body1">
           Loading...

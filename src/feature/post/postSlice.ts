@@ -36,6 +36,14 @@ interface IIntialPost {
   userId: string | number
 }
 
+interface IUpdatePost {
+  id: string | number
+  title: string
+  body: string
+  userId: string | number
+  reactions: IReaction
+}
+
 const initialState: InitialStateProps = {
   posts: [],
   status: 'idle',
@@ -57,6 +65,28 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPos
   try {
     const response = await axios.post(POST_URL, initialPost)
     return response.data
+  } catch (err: any) {
+    return err.message
+  }
+})
+
+export const updatePost = createAsyncThunk('posts/updatPost', async (initialPost: IUpdatePost) => {
+  const { id } = initialPost
+  try {
+    const response = await axios.put(`${POST_URL}/${id}`, initialPost)
+    return response.data
+  } catch (err: any) {
+    //return err.message using fake api
+    return initialPost
+  }
+})
+
+export const deletePost = createAsyncThunk('posts/deletePost', async (initialPost: IUpdatePost) => {
+  const { id } = initialPost
+  try {
+    const response = await axios.delete(`${POST_URL}/${id}`)
+    if (response.status === 200) return initialPost
+    return `${response.status} : ${response.statusText}`
   } catch (err: any) {
     return err.message
   }
@@ -137,6 +167,28 @@ const postSlice = createSlice({
           coffee: 0,
         }
         state.posts.push(action.payload)
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        if (!action.payload.id) {
+          console.log('update could not complete')
+          console.log(action.payload)
+          return
+        }
+        const { id } = action.payload
+        action.payload.date = new Date().toISOString()
+        const posts = state.posts.filter((post) => post.id !== id)
+        state.posts = [...posts, action.payload]
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        if (!action.payload.id) {
+          console.log('Delete could not complete')
+          console.log(action.payload)
+          return
+        }
+        const { id } = action.payload
+        action.payload.date = new Date().toISOString()
+        const posts = state.posts.filter((post) => post.id !== id)
+        state.posts = posts
       })
   },
 })

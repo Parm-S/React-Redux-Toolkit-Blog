@@ -20,7 +20,7 @@ const pages = [
   },
   {
     url: '/post',
-    name: 'Post',
+    name: 'Add Post',
   },
 ]
 
@@ -36,7 +36,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <AppBar component={"nav"}>
+    <AppBar component={'nav'} sx={{ border: 'none' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

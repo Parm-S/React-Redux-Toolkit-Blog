@@ -4,8 +4,9 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import CardActionArea from '@mui/material/CardActionArea'
+import Button from '@mui/material/Button'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import PostAuthor from './PostAuthor'
 import TimeAgo from './TimeAgo'
@@ -25,6 +26,16 @@ interface IPostProps {
 
 const Post: React.FC<IPostProps> = ({ id, title, content, userId, date, post }) => {
   const { postId } = useParams()
+  const navigate = useNavigate()
+
+  const clickHandler = React.useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault()
+      navigate(`/post/edit/${postId}`)
+    },
+    [postId]
+  )
+
   return (
     <Card sx={{ width: 1 }}>
       <CardActionArea component={Link} to={`post/${id}`}>
@@ -53,11 +64,17 @@ const Post: React.FC<IPostProps> = ({ id, title, content, userId, date, post }) 
           >
             {postId === undefined ? `${content.substring(0, 75)}...` : content}
           </Typography>
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            {postId && <Button onClick={clickHandler}>Edit Post</Button>}
             <PostAuthor userId={userId} />
             <TimeAgo timeStamp={date} />
-            <ReactionButtons post={post} />
           </Box>
+          <ReactionButtons post={post} />
         </CardContent>
       </CardActionArea>
     </Card>

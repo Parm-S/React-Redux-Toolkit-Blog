@@ -15,7 +15,7 @@ const PostAuthor: React.FC<IPostAuthor> = ({ userId }) => {
 
   const author = users.find((user) => user.id == userId)
 
-  return <Typography variant="body1" color="text.secondary">by {author ? author.name : 'unknown user'}</Typography>
+  return <Typography variant="body1" color="text.secondary" pr={1}>by {author ? author.name : 'unknown user'}</Typography>
 }
 
 export default PostAuthor
