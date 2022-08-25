@@ -7,7 +7,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hook'
 import Post from './Post'
 
 import { getPostsError, getPostsStatus, IPost, selectAllPosts } from './postSlice'
-import { Container } from '@mui/system'
+import  Container  from '@mui/material/Container'
 
 const PostList: React.FC = () => {
   const posts = useAppSelector(selectAllPosts)
